@@ -17,7 +17,7 @@ st.markdown(
 )
 
 # Set the sidebar image
-image = Image.open("C:/Users/volun/DS4A/project/assets/CI_logo.png")
+image = Image.open("./CI_logo.png")
 st.sidebar.image(image, use_column_width=True)
 
 # Set the sidebar title
