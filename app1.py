@@ -13,19 +13,10 @@ def app():
         "Ceramica Italia's Customers segmentation based on purchasing history.")
 
     # import the data
-    df = px.data.iris()
+    X=pd.read_csv('datos_cluster.csv')
 
-    fig = go.Figure(data=[go.Scatter3d(x=df['sepal_width'],
-                                       y=df['sepal_length'],
-                                       z=df['petal_length'],
-                                       mode='markers',
-                                       marker=dict(
-        size=12,
-        color=df['petal_width'],
-        colorscale='Viridis',
-        opacity=0.8
-    )
-    )])
+    fig = px.scatter_3d(X, x='dias_ultima_compra', y='monto', z='frecuencia',
+              color='cluster')
 
     # Display the plotly figure
     st.plotly_chart(fig, use_container_width=True)
