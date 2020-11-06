@@ -1,4 +1,7 @@
 pandas
 numpy
 plotly
-streamlit
+streamlit==0.69.2
+branca
+folium
+streamlit_folium

@@ -28,7 +28,7 @@ st.sidebar.title('Ceramica Italia web app')
 PAGES = {
     "Customer Segmentation": app1,
     "Google Analytics": app2,
-    "Cusotmer Segmentation Map":app3
+    "Customer Segmentation Map": app3
 }
 st.sidebar.subheader("Select a dashboard page")
 selection = st.sidebar.selectbox("", list(PAGES.keys()))
