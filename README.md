@@ -1,7 +1,7 @@
 # Project_DS4A
 Code and data about the final project required for the DS4A-3.0 program in Colombia. <br /> 
 <br />
-**To visit the web app running on an EC2 instance** ---> http://3.138.114.246:8501/
+**To visit the web app running on an EC2 instance** ---> http://3.138.114.246:8501/ <br />
 <br />
 **To run the app locally just follow these steps:** <br />
 1. Create & activate a new virtual environment.
