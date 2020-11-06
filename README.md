@@ -1,6 +1,7 @@
 # Project_DS4A
 Code and data about the final project required for the DS4A-3.0 program in Colombia. <br /> 
-To run the app just follow these steps: <br />
+<br />
+**To run the app just follow these steps:** <br />
 1. Create a new virtual environment.
 2. install the required libraries: <code>pip install -r reqirements.txt</code>
 3. cd to the app & run the streamlit web app: <code>streamlit run main_app.py</code>
