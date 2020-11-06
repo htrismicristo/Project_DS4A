@@ -38,16 +38,14 @@ page.app()
 # Set author names on the sidebar using markdown
 st.sidebar.markdown(
 
-    """
-AUTHORS:
-
-NATALÍ VELASQUEZ\n
-DANIEL ESCAMILLA\n
-DANNIN GOMEZ\n
-DAVID NAVARRO\n
-FREDY MUÑOZ\n
-HERMES ROMERO\n
-WILSON RODRÍGUEZ\n
+    """<h5><br><br><strong><b>AUTHORS:</strong><br>
+<strong><br><b>NATALÍ VELASQUEZ<br />
+  <b>DANIEL ESCAMILLA<br />
+  <b>DANNIN GOMEZ<br />
+  <b>DAVID NAVARRO<br />
+  <b>FREDY MUÑOZ<br />
+  <b>HERMES ROMERO<br />
+  <b>WILSON RODRÍGUEZ</b></strong></h5>
 
 
-""")
+""", unsafe_allow_html=True)

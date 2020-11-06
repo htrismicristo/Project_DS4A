@@ -3,6 +3,7 @@ import pandas as pd
 import plotly
 import streamlit as st
 import plotly.graph_objects as go
+import datetime
 import plotly.express as px
 
 
@@ -17,36 +18,69 @@ def app():
     st.subheader("ADWORDS")
     st.write("Times of the day when Adwords ads are most effective")
     adwordsbyhour = st.cache(pd.read_csv)("AdwordsByHour.csv")
+    adwordsbyhour_data = adwordsbyhour.copy()
+
     is_check = st.checkbox("Display Data")
     if is_check:
-        st.write(adwordsbyhour)
-
-    horario = adwordsbyhour['Hora']
-    sesion = adwordsbyhour['Sesiones']
-    fig4 = go.Figure(data=[go.Pie(labels=horario, values=sesion)])
-    st.plotly_chart(fig4, use_container_width=True)
+        st.write(adwordsbyhour_data)
+    adwordsbyhour_data['Hora'] = pd.to_datetime(
+        adwordsbyhour_data['Hora'], format='%H:%M:%S')
+    adwordsbyhour_data['Hora'] = adwordsbyhour_data['Hora'].dt.hour
+    adwordsbyhour_data = adwordsbyhour_data.sort_values(
+        by='Hora', ascending=True)
+    graf = adwordsbyhour_data.set_index('Hora')
+    st.line_chart(graf)
 
     # searches
     st.subheader("SEARCHES")
     st.write("Most searched words")
     adwords1 = st.cache(pd.read_csv)("Adwords1.csv")
+    adwords1_data = adwords1.copy()
+
+    today = datetime.date.today()
+    tomorrow = today + datetime.timedelta(days=1)
+    start_date = st.date_input('Start date', datetime.date(2019, 1, 1))
+    start_date = np.datetime64(start_date)
+    end_date = st.date_input('End date', datetime.date(2019, 1, 31))
+    end_date = np.datetime64(end_date)
+    adwords1_data['Fecha'] = pd.to_datetime(
+        adwords1_data['Fecha'], format='%Y-%m-%d')
+    mask = (adwords1_data['Fecha'] > start_date) & (
+        adwords1_data['Fecha'] <= end_date)
+    adwords1_data = adwords1_data.loc[mask]
+
     is_check1 = st.checkbox("Display Searches")
     if is_check1:
-        st.write(adwords1)
-    st.bar_chart(adwords1.ConsultaBusqueda)
+        st.write(adwords1_data)
+
+    st.bar_chart(adwords1_data.ConsultaBusqueda)
 
     # placements
     st.subheader("PLACEMENTS")
     st.write("Most effective placement URLs")
     adwords3 = st.cache(pd.read_csv)("Adwords3.csv")
-    is_check3 = st.checkbox("Display Table")
-    if is_check3:
-        st.write(adwords3)
-    adwords3 = adwords3[~adwords3['URL del emplazamiento'].astype(
+    adwords3_data = adwords3.copy()
+
+    today = datetime.date.today()
+    tomorrow = today + datetime.timedelta(days=1)
+    start_date = st.date_input('Start date', datetime.date(2020, 1, 1))
+    start_date = np.datetime64(start_date)
+    end_date = st.date_input('End date', datetime.date(2020, 1, 31))
+    end_date = np.datetime64(end_date)
+    adwords3_data['Fecha'] = pd.to_datetime(
+        adwords3_data['Fecha'], format='%Y-%m-%d')
+    mask = (adwords3_data['Fecha'] > start_date) & (
+        adwords3_data['Fecha'] <= end_date)
+    adwords3_data = adwords3_data.loc[mask]
+    adwords3_data = adwords3_data[~adwords3_data['URL del emplazamiento'].astype(
         str).str.startswith('mobileapp::')]
 
-    url = [adwords3[i]
-           for i in adwords3.columns if 'URL del emplazamiento' in i]
+    is_check3 = st.checkbox("Display Table")
+    if is_check3:
+        st.write(adwords3_data)
+
+    url = [adwords3_data[i]
+           for i in adwords3_data.columns if 'URL del emplazamiento' in i]
     df_url = pd.concat(url).reset_index()
     df_url = df_url.rename(columns={0: 'Urls'})
     rurl = df_url.groupby(
@@ -64,7 +98,21 @@ def app():
     st.subheader("WEEKDAYS")
     st.write("Ads effectiveness by day of the week.")
     adwords2 = st.cache(pd.read_csv)("Adwords2.csv")
-    st.bar_chart(adwords2.day)
+    adwords2_data = adwords2.copy()
+
+    today = datetime.date.today()
+    tomorrow = today + datetime.timedelta(days=1)
+    start_date1 = st.date_input('Start Date', datetime.date(2020, 1, 1))
+    start_date1 = np.datetime64(start_date1)
+    end_date1 = st.date_input('End Date', datetime.date(2020, 1, 31))
+    end_date1 = np.datetime64(end_date1)
+    adwords2_data['Fecha'] = pd.to_datetime(
+        adwords2_data['Fecha'], format='%Y-%m-%d')
+    mask = (adwords2_data['Fecha'] > start_date1) & (
+        adwords2_data['Fecha'] <= end_date1)
+    adwords2_data = adwords2_data.loc[mask]
+
+    st.bar_chart(adwords2_data.day)
 
    # Wilson's charts
     system_rebote = pd.read_csv('./system_rebote.csv', sep=',')
